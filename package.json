@@ -1,0 +1,31 @@
+{
+  "name": "remark-inline-code-class",
+  "version": "1.0.0",
+  "description": "remark plugin to assign a class name to an inline code element",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest"
+  },
+  "keywords": [
+    "remark",
+    "plugin",
+    "markdown",
+    "unist"
+  ],
+  "author": "Hunor Márton Borbély",
+  "license": "MIT",
+  "dependencies": {
+    "unist-util-visit": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/unist": "^3.0.3",
+    "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
+    "typescript": "^5.7.2",
+    "unified": "^11.0.5",
+    "vitest": "^2.1.8"
+  }
+}
