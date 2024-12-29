@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
@@ -27,12 +30,13 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Bump version and push tag
+        id: version
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           npm version minor -m "chore(release): %s"
           git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
-          git push origin HEAD:main --follow-tags
+          git push --follow-tags
 
       - name: Publish to npm
         env:
