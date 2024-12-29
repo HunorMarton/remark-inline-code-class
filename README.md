@@ -4,7 +4,7 @@
 
 For example in the following example, you can see that the word `circle` is highlighted in green, because the circle an element, the words `cx`, `cy`, and `r` are highlighted in purple, because they represent properties, and the numbers `100` and `120` are highlighted in blue, because they represent property values. [Link to live example](https://svg-tutorial.com/svg/basic-shapes#how-to-draw-a-circle-in-svg).
 
-[![example image](./example.png)](https://svg-tutorial.com/svg/basic-shapes#how-to-draw-a-circle-in-svg)
+[![example image](https://github.com/HunorMarton/remark-inline-code-class/raw/main/example.png)](https://svg-tutorial.com/svg/basic-shapes#how-to-draw-a-circle-in-svg)
 
 With this plugin we can write our markdown as follows:
 
