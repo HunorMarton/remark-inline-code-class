@@ -1,6 +1,6 @@
 {
   "name": "remark-inline-code-class",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "remark plugin to assign a class name to an inline code element",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
