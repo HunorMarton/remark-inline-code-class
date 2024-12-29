@@ -1,4 +1,4 @@
-# @hunormarton/remark-inline-code-class
+# remark-inline-code-class
 
 [Remark](https://github.com/remarkjs/remark) plugin that allows you to assign class names to inline code elements. You can assign different classes to different code elements.
 
@@ -47,7 +47,7 @@ code.value {
 ## Installation
 
 ```sh
-npm install @hunormarton/remark-inline-code-class
+npm install remark-inline-code-class
 ```
 
 ## Usage with Astro

@@ -1,0 +1,50 @@
+# Ignore node_modules folder
+node_modules
+
+# Ignore build tools and configuration files
+.babelrc
+.eslintrc
+.jshintrc
+.prettierrc
+.stylelintrc
+*.config.js
+*.config.cjs
+*.config.mjs
+*.config.json
+
+# Ignore test files
+__tests__/
+test/
+tests/
+*.spec.js
+*.test.js
+vitest.config.ts
+
+# Ignore documentation files
+example.png
+
+# Ignore local environment files
+.env
+*.local
+
+# Ignore logs
+*.log
+
+# Ignore editor-specific files
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Ignore coverage reports
+coverage/
+
+# Ignore miscellaneous
+.DS_Store
+Thumbs.db
+
+.github/
+
+# Ensure dist folder is included
+!dist/
