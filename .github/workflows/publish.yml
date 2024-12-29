@@ -5,9 +5,6 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
@@ -20,6 +17,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18" # Use the Node.js version you prefer
+          registry-url: "https://registry.npmjs.org" # Ensure the registry URL is set
 
       - name: Install dependencies
         run: npm install
@@ -29,14 +27,23 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Check if this is the first release
+        id: check_version
+        run: |
+          if [ -z "$(git tag)" ]; then
+            echo "first_release=true" >> $GITHUB_ENV
+          else
+            echo "first_release=false" >> $GITHUB_ENV
+          fi
+
       - name: Bump version and push tag
-        id: version
+        if: env.first_release == 'false'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          npm version minor -m "chore(release): %s"
+          npm version patch -m "chore(release): %s"
           git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
-          git push --follow-tags
+          git push origin HEAD:main --follow-tags
 
       - name: Publish to npm
         env:
