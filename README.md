@@ -1,8 +1,8 @@
 # remark-inline-code-class
 
-[Remark](https://github.com/remarkjs/remark) plugin that allows you to assign class names to inline code elements. You can assign different classes to different code elements.
+[Remark](https://github.com/remarkjs/remark) plugin that lets you assign class names to inline code elements. This way you can style inline code elements by class.
 
-For example in the following example, you can see that the word `circle` is highlighted in green, because the circle an element, the words `cx`, `cy`, and `r` are highlighted in purple, because they represent properties, and the numbers `100` and `120` are highlighted in blue, because they represent property values. [Link to live example](https://svg-tutorial.com/svg/basic-shapes#how-to-draw-a-circle-in-svg).
+For example, on [SVG-Tutorial.com](https://svg-tutorial.com/), the elements are highlighted in green, the properties are highlighted in purple, and the values are highlighted in blue. [Link to live example](https://svg-tutorial.com/svg/basic-shapes#how-to-draw-a-circle-in-svg).
 
 [![example image](https://github.com/HunorMarton/remark-inline-code-class/raw/main/example.png)](https://svg-tutorial.com/svg/basic-shapes#how-to-draw-a-circle-in-svg)
 
@@ -87,12 +87,44 @@ const file = await unified()
 console.log(String(file));
 ```
 
-### Options
+## Options
 
-The plugin comes with the following optional options:
+The plugin lets you override the `separator` string that separates the class name from the value.
 
-- **separator**: Custom separator string, if you don't want to use the (default: `:`)
-- **classNames**: If you want to restrict the potential class names you can set an array with accepted class names (default: anything)
+You can set it in the Astro config file:
+
+```js "separator"
+import { defineConfig } from "astro/config";
+import remarkInlineCodeClass from "remark-inline-code-class";
+
+// https://astro.build/config
+export default defineConfig({
+  markdown: {
+    remarkPlugins: [[remarkInlineCodeClass, { separator: "|" }]],
+  },
+});
+```
+
+Or when using it with Unist:
+
+```js
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkStringify from "remark-stringify";
+import remarkInlineCodeClass from "remark-inline-code-class";
+
+const file = await unified()
+  .use(remarkParse)
+  .use(remarkInlineCodeClass, { separator: "|" })
+  .use(remarkStringify)
+  .process('This is an inline `red:element` with the class "red"');
+
+console.log(String(file));
+```
+
+## How does it work?
+
+Read more about it on my [tech blog](https://hunormarton.com/blog/remark-inline-code-class).
 
 ## License
 

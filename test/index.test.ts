@@ -28,32 +28,6 @@ describe("remark-inline-code-class", () => {
     expect(result).toBe(expectedOutput);
   });
 
-  it("should add class to inline code only if class name is listed", () => {
-    const processor = unified()
-      .use(parse)
-      .use(inlineCodeClass, { classNames: ["class1", "class2"] })
-      .use(stringify);
-
-    const input = "`class1:example`";
-    const expectedOutput = '<code class="class1">example</code>';
-
-    const result = processor.processSync(input).toString().trim();
-    expect(result).toBe(expectedOutput);
-  });
-
-  it("should not add class to inline code with unlisted class name", () => {
-    const processor = unified()
-      .use(parse)
-      .use(inlineCodeClass, { classNames: ["class1", "class2"] })
-      .use(stringify);
-
-    const input = "`class3:example`";
-    const expectedOutput = "`class3:example`";
-
-    const result = processor.processSync(input).toString().trim();
-    expect(result).toBe(expectedOutput);
-  });
-
   it("should not modify inline code without prefix", () => {
     const processor = unified().use(parse).use(inlineCodeClass).use(stringify);
 

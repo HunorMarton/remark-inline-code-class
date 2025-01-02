@@ -3,10 +3,11 @@ import { Node, Literal, Parent } from "unist";
 
 type Options = Partial<{
   separator: string;
-  classNames: string[];
 }>;
 
 export default function remarkInlineCodeClass(options?: Options) {
+  const separator = options?.separator || ":";
+
   return (tree: Node) => {
     visit(
       tree,
@@ -14,11 +15,8 @@ export default function remarkInlineCodeClass(options?: Options) {
       (node: Literal, index: number, parent: Parent) => {
         if (typeof node.value !== "string") return;
 
-        const separator = options?.separator || ":";
-        const classNames = options?.classNames || [];
-        const classNamesPattern =
-          classNames.length > 0 ? `(${classNames.join("|")})` : `([^:]+)`;
-        const regex = new RegExp(`^${classNamesPattern}${separator}(.+)$`);
+        // Break down the content into class name and value
+        const regex = new RegExp(`^([^${separator}]+)${separator}(.+)$`);
         const match = regex.exec(node.value);
         if (match) {
           const [, className, codeValue] = match;
@@ -28,6 +26,7 @@ export default function remarkInlineCodeClass(options?: Options) {
             value: `<code class="${className}">${codeValue}</code>`,
           };
 
+          // Replace node with HTML snippet
           parent.children.splice(index, 1, codeNode);
         }
       }
