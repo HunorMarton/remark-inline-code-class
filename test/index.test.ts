@@ -5,7 +5,7 @@ import stringify from "remark-stringify";
 import inlineCodeClass from "../src/index";
 
 describe("remark-inline-code-class", () => {
-  it("should not modify inline code without prefix nor base class specified", () => {
+  it("should not modify inline code without prefix nor inline class specified", () => {
     const processor = unified().use(parse).use(inlineCodeClass).use(stringify);
 
     const input = "`example`";
@@ -15,10 +15,10 @@ describe("remark-inline-code-class", () => {
     expect(result).toBe(expectedOutput);
   });
 
-  it("should add base class if specified", () => {
+  it("should add inline class if specified", () => {
     const processor = unified()
       .use(parse)
-      .use(inlineCodeClass, { baseClass: "inline" })
+      .use(inlineCodeClass, { inlineClass: "inline" })
       .use(stringify);
 
     const input = "`example`";
@@ -38,10 +38,10 @@ describe("remark-inline-code-class", () => {
     expect(result).toBe(expectedOutput);
   });
 
-  it("should add base class and prefix as class name", () => {
+  it("should add inline class and prefix as class name", () => {
     const processor = unified()
       .use(parse)
-      .use(inlineCodeClass, { baseClass: "inline" })
+      .use(inlineCodeClass, { inlineClass: "inline" })
       .use(stringify);
 
     const input = "`my-class:example`";

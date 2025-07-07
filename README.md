@@ -89,7 +89,7 @@ console.log(String(file));
 
 ## Options
 
-The plugin lets you set the `baseClass` string that sets a class for every inline code element.
+The plugin lets you set the `inlineClass` string option that sets a class for every inline code element.
 
 This is useful, when you want to threat inline code elements separate from code blocks:
 
@@ -111,7 +111,7 @@ import remarkInlineCodeClass from "remark-inline-code-class";
 // https://astro.build/config
 export default defineConfig({
   markdown: {
-    remarkPlugins: [[remarkInlineCodeClass, { baseClass: "inline" }]],
+    remarkPlugins: [[remarkInlineCodeClass, { inlineClass: "inline" }]],
   },
 });
 ```
@@ -126,7 +126,7 @@ import remarkInlineCodeClass from "remark-inline-code-class";
 
 const file = await unified()
   .use(remarkParse)
-  .use(remarkInlineCodeClass, { baseClass: "inline" })
+  .use(remarkInlineCodeClass, { inlineClass: "inline" })
   .use(remarkStringify)
   .process('This is an inline `red:element` with the class "red"');
 

@@ -2,12 +2,12 @@ import { visit } from "unist-util-visit";
 import { Node, Literal, Parent } from "unist";
 
 type Options = Partial<{
-  baseClass: string;
+  inlineClass: string;
   separator: string;
 }>;
 
 export default function remarkInlineCodeClass(options?: Options) {
-  const baseClass = options?.baseClass;
+  const inlineClass = options?.inlineClass;
   const separator = options?.separator ?? ":";
 
   return (tree: Node) => {
@@ -21,9 +21,11 @@ export default function remarkInlineCodeClass(options?: Options) {
         const regex = new RegExp(`^([^${separator}]+)${separator}(.+)$`);
         const match = regex.exec(node.value);
         if (match) {
-          const [, className, codeValue] = match;
+          const [, parsedClass, codeValue] = match;
 
-          const classes = baseClass ? `${baseClass} ${className}` : className;
+          const classes = inlineClass
+            ? `${inlineClass} ${parsedClass}`
+            : parsedClass;
 
           const codeNode = {
             type: "html",
@@ -32,10 +34,10 @@ export default function remarkInlineCodeClass(options?: Options) {
 
           // Replace node with HTML snippet
           parent.children.splice(index, 1, codeNode);
-        } else if (!!baseClass) {
+        } else if (!!inlineClass) {
           const codeNode = {
             type: "html",
-            value: `<code class="${baseClass}">${node.value}</code>`,
+            value: `<code class="${inlineClass}">${node.value}</code>`,
           };
 
           parent.children.splice(index, 1, codeNode);
