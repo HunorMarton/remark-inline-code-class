@@ -5,7 +5,30 @@ import stringify from "remark-stringify";
 import inlineCodeClass from "../src/index";
 
 describe("remark-inline-code-class", () => {
-  it("should add class name to inline code if class names are not restricted", () => {
+  it("should not modify inline code without prefix nor base class specified", () => {
+    const processor = unified().use(parse).use(inlineCodeClass).use(stringify);
+
+    const input = "`example`";
+    const expectedOutput = "`example`";
+
+    const result = processor.processSync(input).toString().trim();
+    expect(result).toBe(expectedOutput);
+  });
+
+  it("should add base class if specified", () => {
+    const processor = unified()
+      .use(parse)
+      .use(inlineCodeClass, { baseClass: "inline" })
+      .use(stringify);
+
+    const input = "`example`";
+    const expectedOutput = '<code class="inline">example</code>';
+
+    const result = processor.processSync(input).toString().trim();
+    expect(result).toBe(expectedOutput);
+  });
+
+  it("should add prefix as class name", () => {
     const processor = unified().use(parse).use(inlineCodeClass).use(stringify);
 
     const input = "`my-class:example`";
@@ -15,7 +38,20 @@ describe("remark-inline-code-class", () => {
     expect(result).toBe(expectedOutput);
   });
 
-  it("should add class to inline code with custom separator", () => {
+  it("should add base class and prefix as class name", () => {
+    const processor = unified()
+      .use(parse)
+      .use(inlineCodeClass, { baseClass: "inline" })
+      .use(stringify);
+
+    const input = "`my-class:example`";
+    const expectedOutput = '<code class="inline my-class">example</code>';
+
+    const result = processor.processSync(input).toString().trim();
+    expect(result).toBe(expectedOutput);
+  });
+
+  it("should respect custom separator", () => {
     const processor = unified()
       .use(parse)
       .use(inlineCodeClass, { separator: "::" })
@@ -23,16 +59,6 @@ describe("remark-inline-code-class", () => {
 
     const input = "`my-class::example`";
     const expectedOutput = '<code class="my-class">example</code>';
-
-    const result = processor.processSync(input).toString().trim();
-    expect(result).toBe(expectedOutput);
-  });
-
-  it("should not modify inline code without prefix", () => {
-    const processor = unified().use(parse).use(inlineCodeClass).use(stringify);
-
-    const input = "`example`";
-    const expectedOutput = "`example`";
 
     const result = processor.processSync(input).toString().trim();
     expect(result).toBe(expectedOutput);

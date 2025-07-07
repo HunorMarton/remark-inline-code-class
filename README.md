@@ -89,7 +89,18 @@ console.log(String(file));
 
 ## Options
 
-The plugin lets you override the `separator` string that separates the class name from the value.
+The plugin lets you set the `baseClass` string that sets a class for every inline code element.
+
+This is useful, when you want to threat inline code elements separate from code blocks:
+
+```html
+<p>This is an inline <code class="inline">code</code> element</p>
+<pre>
+  <code>
+    And this is a code block.
+  </code>
+</pre>
+```
 
 You can set it in the Astro config file:
 
@@ -100,7 +111,7 @@ import remarkInlineCodeClass from "remark-inline-code-class";
 // https://astro.build/config
 export default defineConfig({
   markdown: {
-    remarkPlugins: [[remarkInlineCodeClass, { separator: "|" }]],
+    remarkPlugins: [[remarkInlineCodeClass, { baseClass: "inline" }]],
   },
 });
 ```
@@ -115,7 +126,7 @@ import remarkInlineCodeClass from "remark-inline-code-class";
 
 const file = await unified()
   .use(remarkParse)
-  .use(remarkInlineCodeClass, { separator: "|" })
+  .use(remarkInlineCodeClass, { baseClass: "inline" })
   .use(remarkStringify)
   .process('This is an inline `red:element` with the class "red"');
 
